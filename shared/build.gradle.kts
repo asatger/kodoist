@@ -3,6 +3,13 @@ plugins {
     id("com.android.library")
 }
 
+object Versions {
+    const val kotlinxCoroutines = "1.6.4"
+    const val koin = "3.2.0"
+    const val okio = "3.3.0"
+    const val kotlinxDatetime = "0.4.0"
+}
+
 kotlin {
     android()
     
@@ -17,10 +24,27 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+
+                // Kotlin datetime
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:${Versions.kotlinxDatetime}")
+
+                // Kotlin coroutines
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinxCoroutines}")
+
+                // Koin
+                implementation("io.insert-koin:koin-core:${Versions.koin}")
+                implementation("io.insert-koin:koin-android:${Versions.koin}")
+
+                // Okio
+                implementation("com.squareup.okio:okio:${Versions.okio}")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                implementation("io.insert-koin:koin-test:${Versions.koin}")
             }
         }
         val androidMain by getting
